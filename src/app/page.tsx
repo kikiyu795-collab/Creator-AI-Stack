@@ -8,7 +8,7 @@ import {
   type BenchmarkAccount, type UpcomingItem,
 } from '@/data/stack';
 
-const MindMap = dynamic(() => import('@/components/MindMap'), { ssr: false });
+import StackView from '@/components/StackView';
 
 const NAV = [
   { key: 'stack', label: '工具实况', icon: '🧠' },
@@ -175,15 +175,8 @@ export default function Home() {
           </p>
         </header>
 
-        {/* STACK VIEW - Mind Map */}
-        {view === 'stack' && (
-          <div>
-            <p className="text-[11px] text-[var(--text-muted)] mb-3 font-medium">
-              可缩放 · 可拖拽 · 点击工具名访问官网
-            </p>
-            <MindMap />
-          </div>
-        )}
+        {/* STACK VIEW */}
+        {view === 'stack' && <StackView />}
 
         {/* BENCHMARKS VIEW */}
         {view === 'benchmarks' && (
