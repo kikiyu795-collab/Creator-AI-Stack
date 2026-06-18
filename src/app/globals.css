@@ -2,19 +2,22 @@
 @import "@xyflow/react/dist/style.css";
 
 :root {
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #12121a;
-  --bg-card: #16161f;
-  --bg-card-hover: #1c1c28;
-  --border: #1e1e2e;
-  --border-hover: #2a2a3e;
-  --text-primary: #e8e8ed;
-  --text-secondary: #8888a0;
-  --text-muted: #55556a;
-  --accent: #6366f1;
-  --accent-glow: rgba(99, 102, 241, 0.15);
-  --gold: #d4a853;
-  --green: #34d399;
+  --bg-primary: #f2f2f7;
+  --bg-glass: rgba(255, 255, 255, 0.45);
+  --bg-glass-heavy: rgba(255, 255, 255, 0.65);
+  --bg-glass-light: rgba(255, 255, 255, 0.25);
+  --border-glass: rgba(255, 255, 255, 0.6);
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-muted: #aeaeb2;
+  --accent: #007aff;
+  --accent-light: rgba(0, 122, 255, 0.08);
+  --green: #34c759;
+  --orange: #ff9500;
+  --purple: #af52de;
+  --pink: #ff2d55;
+  --blur: 40px;
 }
 
 @theme inline {
@@ -27,8 +30,9 @@
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   margin: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
@@ -38,31 +42,98 @@ body {
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 3px; }
 
-/* React Flow overrides */
-.react-flow__background { background: var(--bg-primary) !important; }
-.react-flow__controls { background: var(--bg-card) !important; border: 1px solid var(--border) !important; border-radius: 8px !important; }
-.react-flow__controls-button { background: var(--bg-card) !important; border-bottom-color: var(--border) !important; fill: var(--text-secondary) !important; }
-.react-flow__controls-button:hover { background: var(--bg-card-hover) !important; fill: var(--text-primary) !important; }
-.react-flow__minimap { background: var(--bg-secondary) !important; border: 1px solid var(--border) !important; border-radius: 8px !important; }
-.react-flow__edge-path { stroke: var(--border-hover) !important; stroke-width: 2 !important; }
-
-/* Glow animation */
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
-  50% { box-shadow: 0 0 40px var(--accent-glow), 0 0 60px rgba(99, 102, 241, 0.05); }
+/* Liquid Glass base */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+  border: 1px solid var(--border-glass);
+  box-shadow:
+    0 0.5px 0 0 rgba(255,255,255,0.6) inset,
+    0 1px 3px rgba(0,0,0,0.06),
+    0 8px 24px rgba(0,0,0,0.04);
 }
 
-.node-glow { animation: glow-pulse 3s ease-in-out infinite; }
+.glass-heavy {
+  background: var(--bg-glass-heavy);
+  backdrop-filter: blur(60px) saturate(200%);
+  -webkit-backdrop-filter: blur(60px) saturate(200%);
+  border: 1px solid rgba(255,255,255,0.7);
+  box-shadow:
+    0 0.5px 0 0 rgba(255,255,255,0.8) inset,
+    0 1px 4px rgba(0,0,0,0.06),
+    0 12px 32px rgba(0,0,0,0.05);
+}
 
-/* Cinematic grain overlay */
-.grain::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  opacity: 0.03;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  z-index: 9999;
+.glass-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(30px) saturate(160%);
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  box-shadow:
+    0 0.5px 0 0 rgba(255,255,255,0.5) inset,
+    0 1px 2px rgba(0,0,0,0.04),
+    0 4px 16px rgba(0,0,0,0.03);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.glass-card:hover {
+  background: var(--bg-glass-heavy);
+  box-shadow:
+    0 0.5px 0 0 rgba(255,255,255,0.7) inset,
+    0 2px 8px rgba(0,0,0,0.06),
+    0 12px 32px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
+}
+
+/* Ambient mesh background */
+.mesh-bg {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 122, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(175, 82, 222, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(52, 199, 89, 0.04) 0%, transparent 50%),
+    var(--bg-primary);
+}
+
+/* React Flow overrides for glass style */
+.react-flow__background { background: transparent !important; }
+.react-flow__controls {
+  background: var(--bg-glass-heavy) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border: 1px solid var(--border-glass) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06) !important;
+}
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom-color: rgba(0,0,0,0.06) !important;
+  fill: var(--text-secondary) !important;
+}
+.react-flow__controls-button:hover {
+  background: rgba(0,0,0,0.04) !important;
+  fill: var(--text-primary) !important;
+}
+.react-flow__edge-path { stroke: rgba(0,0,0,0.1) !important; stroke-width: 1.5 !important; }
+
+/* Glow for center node */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 122, 255, 0.15), 0 8px 32px rgba(0,0,0,0.08); }
+  50% { box-shadow: 0 0 40px rgba(0, 122, 255, 0.2), 0 12px 40px rgba(0,0,0,0.1); }
+}
+.node-glow { animation: glow-pulse 4s ease-in-out infinite; }
+
+/* Tag pill */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.04);
+  color: var(--text-secondary);
 }

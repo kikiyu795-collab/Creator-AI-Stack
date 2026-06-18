@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   ReactFlow,
   Controls,
@@ -53,7 +53,7 @@ function ToolNode({ data }: { data: { name: string; role: string; note: string; 
       href={data.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="block rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2.5 hover:border-indigo-500/30 hover:bg-[var(--bg-card)] transition-all group cursor-pointer max-w-[220px]"
+      className="block rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-2.5 hover:border-indigo-500/30 hover:bg-[var(--bg-card)] transition-all group cursor-pointer w-[200px]"
     >
       <div className="flex items-center gap-2 mb-1">
         <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${data.isMain ? 'bg-indigo-400' : 'bg-[var(--text-muted)]'}`} />
@@ -78,95 +78,109 @@ const nodeTypes = {
   tool: ToolNode,
 };
 
-export default function MindMap() {
-  const { initialNodes, initialEdges } = useMemo(() => {
-    const nodes: Node[] = [];
-    const edges: Edge[] = [];
+// Layout: left column (4 scenarios) and right column (3 scenarios), tools fan out horizontally
+function buildLayout() {
+  const nodes: Node[] = [];
+  const edges: Edge[] = [];
 
-    const cx = 600, cy = 450;
+  const cx = 550, cy = 400;
+  nodes.push({
+    id: 'center',
+    type: 'center',
+    position: { x: cx - 80, y: cy - 30 },
+    data: { label: 'Kiki 的工具栈' },
+  });
+
+  const leftScenarios = [0, 1, 2, 3]; // Scripting, Image, Video, Voice
+  const rightScenarios = [4, 5, 6];    // Editing, Research, Automation
+
+  const scenarioXLeft = cx - 280;
+  const scenarioXRight = cx + 180;
+  const yStart = 80;
+  const yGap = 180;
+
+  function placeScenario(idx: number, sx: number, sy: number, side: 'left' | 'right') {
+    const section = STACK[idx];
+    const scenarioId = `s-${idx}`;
+
     nodes.push({
-      id: 'center',
-      type: 'center',
-      position: { x: cx - 80, y: cy - 30 },
-      data: { label: 'Kiki 的工具栈' },
+      id: scenarioId,
+      type: 'scenario',
+      position: { x: sx, y: sy },
+      data: { label: section.scenario, icon: section.icon },
     });
 
-    const scenarioCount = STACK.length;
-    const radius = 280;
+    const centerHandle = side === 'left' ? 'l' : 'r';
+    const scenarioTarget = side === 'left' ? 'r' : Position.Left;
+    edges.push({
+      id: `e-center-${scenarioId}`,
+      source: 'center',
+      target: scenarioId,
+      sourceHandle: centerHandle,
+      targetHandle: scenarioTarget as string,
+      type: 'default',
+      style: { stroke: '#6366f1', strokeWidth: 2, opacity: 0.3 },
+    });
 
-    STACK.forEach((section, i) => {
-      const angle = (2 * Math.PI * i) / scenarioCount - Math.PI / 2;
-      const sx = cx + radius * Math.cos(angle) - 70;
-      const sy = cy + radius * Math.sin(angle) - 20;
-      const scenarioId = `s-${i}`;
+    const toolXOffset = side === 'left' ? -240 : 240;
+    const toolYStart = sy - ((section.picks.length - 1) * 80) / 2;
+
+    section.picks.forEach((pick, j) => {
+      const tx = sx + toolXOffset;
+      const ty = toolYStart + j * 80;
+      const toolId = pick.id;
 
       nodes.push({
-        id: scenarioId,
-        type: 'scenario',
-        position: { x: sx, y: sy },
-        data: { label: section.scenario, icon: section.icon },
+        id: toolId,
+        type: 'tool',
+        position: { x: tx, y: ty },
+        data: { ...pick, isMain: j === 0 },
       });
 
-      const sourceHandle = i < scenarioCount / 2 ? 'r' : 'l';
-      const targetHandle = angle > -Math.PI / 4 && angle < Math.PI * 3 / 4 ? Position.Left : Position.Right;
-
+      const srcHandle = side === 'left' ? 'sl' : 'sr';
+      const tgtHandle = side === 'left' ? 'r' : Position.Left;
       edges.push({
-        id: `e-center-${scenarioId}`,
-        source: 'center',
-        target: scenarioId,
-        sourceHandle: sourceHandle,
+        id: `e-${scenarioId}-${toolId}`,
+        source: scenarioId,
+        target: toolId,
+        sourceHandle: srcHandle,
+        targetHandle: tgtHandle as string,
         type: 'default',
-        style: { stroke: '#6366f1', strokeWidth: 2, opacity: 0.3 },
-      });
-
-      const toolRadius = 180;
-      const spreadAngle = Math.PI / (section.picks.length + 1);
-      const baseAngle = angle - spreadAngle * (section.picks.length - 1) / 2;
-
-      section.picks.forEach((pick, j) => {
-        const ta = baseAngle + spreadAngle * j;
-        const outerR = radius + toolRadius;
-        const tx = cx + outerR * Math.cos(ta) - 100;
-        const ty = cy + outerR * Math.sin(ta) - 30;
-        const toolId = pick.id;
-
-        nodes.push({
-          id: toolId,
-          type: 'tool',
-          position: { x: tx, y: ty },
-          data: { ...pick, isMain: j === 0 },
-        });
-
-        edges.push({
-          id: `e-${scenarioId}-${toolId}`,
-          source: scenarioId,
-          target: toolId,
-          sourceHandle: sx > cx ? 'sr' : 'sl',
-          targetHandle: tx > sx ? Position.Left : Position.Right,
-          type: 'default',
-          style: { stroke: '#2a2a3e', strokeWidth: 1.5 },
-        });
+        style: { stroke: '#2a2a3e', strokeWidth: 1.5 },
       });
     });
+  }
 
-    return { initialNodes: nodes, initialEdges: edges };
-  }, []);
+  leftScenarios.forEach((idx, i) => {
+    placeScenario(idx, scenarioXLeft, yStart + i * yGap, 'left');
+  });
 
+  rightScenarios.forEach((idx, i) => {
+    const yOffset = (leftScenarios.length - rightScenarios.length) * yGap / 2;
+    placeScenario(idx, scenarioXRight, yStart + i * yGap + yOffset, 'right');
+  });
+
+  return { initialNodes: nodes, initialEdges: edges };
+}
+
+export default function MindMap() {
+  const { initialNodes, initialEdges } = useMemo(buildLayout, []);
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edgesState, , onEdgesChange] = useEdgesState(initialEdges);
 
   return (
-    <div className="w-full h-[700px] rounded-xl border border-[var(--border)] overflow-hidden bg-[var(--bg-primary)]">
+    <div className="w-full h-[80vh] min-h-[600px] rounded-xl border border-[var(--border)] overflow-hidden bg-[var(--bg-primary)]">
       <ReactFlow
+        key="mindmap-v2"
         nodes={nodes}
         edges={edgesState}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
         fitView
-        minZoom={0.3}
+        fitViewOptions={{ padding: 0.15, maxZoom: 0.32 }}
+        minZoom={0.1}
         maxZoom={1.5}
-        defaultViewport={{ x: 0, y: 0, zoom: 0.65 }}
         proOptions={{ hideAttribution: true }}
       >
         <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="#1a1a2a" />

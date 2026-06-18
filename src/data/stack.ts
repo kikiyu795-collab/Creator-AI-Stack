@@ -1,4 +1,4 @@
-export const LAST_UPDATED = '2026-06-17';
+export const LAST_UPDATED = '2026-06-18';
 
 export interface ToolPick {
   id: string;
@@ -75,69 +75,84 @@ export const STACK: StackSection[] = [
   },
 ];
 
-export interface Source {
+// ==================== 对标账号 ====================
+
+export interface BenchmarkAccount {
   id: string;
   name: string;
   handle: string;
   platform: string;
+  url: string;
   reason: string;
   tags: string[];
-  url?: string;
-  channel?: string;
+  channel?: string; // 对应公司频道
 }
 
-export const SOURCES: Source[] = [
-  // YouTube — PoGoSkill 竞品
-  { id: 'sy-ipogo', name: 'iPogo HowToTechStudio', handle: '@HowToTechStudio', platform: 'YouTube', reason: '竞品产品官方，持续更新安装指南。', tags: ['Pokemon GO', '竞品'], channel: 'PoGoSkill' },
-  { id: 'sy-imyfone', name: 'iMyFone', handle: '@imyfone', platform: 'YouTube', reason: '工具类竞品频道。', tags: ['Pokemon GO', '竞品'], channel: 'PoGoSkill' },
-  { id: 'sy-viciouslabs', name: 'ViciousLabs', handle: '@Vicious_Labs', platform: 'YouTube', reason: 'PoGoSkill赛道5K-10K竞品。', tags: ['Pokemon GO'], channel: 'PoGoSkill' },
-  { id: 'sy-pogoguide', name: 'PoGo Guide YT', handle: '@PoGoGuideYT', platform: 'YouTube', reason: 'PoGoSkill赛道5K-15K竞品。', tags: ['Pokemon GO'], channel: 'PoGoSkill' },
+// --- 公司竞品对标 ---
+export const COMPANY_BENCHMARKS: BenchmarkAccount[] = [
+  // PoGoSkill 竞品
+  { id: 'c-ipogo', name: 'iPogo HowToTechStudio', handle: '@HowToTechStudio', platform: 'YouTube', url: 'https://www.youtube.com/@HowToTechStudio', reason: '竞品产品官方，持续更新安装指南。', tags: ['Pokemon GO', '竞品'], channel: 'PoGoSkill' },
+  { id: 'c-imyfone', name: 'iMyFone', handle: '@imyfone', platform: 'YouTube', url: 'https://www.youtube.com/@imyfone', reason: '工具类竞品频道。', tags: ['Pokemon GO', '竞品'], channel: 'PoGoSkill' },
+  { id: 'c-magfone', name: 'Magfone', handle: '@magfone', platform: 'YouTube', url: 'https://www.youtube.com/@magfone', reason: '工具类竞品Shorts。', tags: ['Pokemon GO'], channel: 'PoGoSkill' },
+  { id: 'c-vicious', name: 'ViciousLabs', handle: '@Vicious_Labs', platform: 'YouTube', url: 'https://www.youtube.com/@Vicious_Labs', reason: 'PoGoSkill赛道5K-10K竞品。', tags: ['Pokemon GO'], channel: 'PoGoSkill' },
+  { id: 'c-pogoguide', name: 'PoGo Guide YT', handle: '@PoGoGuideYT', platform: 'YouTube', url: 'https://www.youtube.com/@PoGoGuideYT', reason: 'PoGoSkill赛道5K-15K竞品。', tags: ['Pokemon GO'], channel: 'PoGoSkill' },
+  { id: 'c-pogospoofer', name: 'pogo_spoofer', handle: '@pogo_spoofer', platform: 'TikTok', url: 'https://www.tiktok.com/@pogo_spoofer', reason: 'PoGoSkill竞品TikTok运营参考。', tags: ['Pokemon GO'], channel: 'PoGoSkill' },
 
-  // YouTube — TSAI 竞品
-  { id: 'sy-answerai', name: 'Answer AI', handle: '@answersai', platform: 'YouTube', reason: '核心对标：AI persona剧情Shorts，100M+播放。', tags: ['AI persona', 'Shorts'], channel: 'TSAI' },
-  { id: 'sy-chalkie', name: 'Chalkie AI', handle: '@chalkieai', platform: 'YouTube', reason: 'GPT Image 2虚拟人设方法论。', tags: ['GPT Image', 'persona'], channel: 'TSAI' },
-  { id: 'sy-corbin', name: 'Corbin Brown', handle: '@Corbin_Brown', platform: 'YouTube', reason: 'AI工具评测160K+竞品。', tags: ['AI tools', '竞品'], channel: 'TSAI' },
-  { id: 'sy-nateherk', name: 'Nate Herk', handle: '@NateHerk', platform: 'YouTube', reason: 'AI工具评测600K+头部。', tags: ['AI tools'], channel: 'TSAI' },
-  { id: 'sy-filternote', name: 'Filternote', handle: '@Filternoteofficial', platform: 'YouTube', reason: 'Bypass竞品参考。', tags: ['bypass', '竞品'], channel: 'TSAI' },
-  { id: 'sy-twaingpt', name: 'BypassGPT/TwainGPT', handle: '@TwainGPT', platform: 'YouTube', reason: 'Bypass reviewer 5K-20K。', tags: ['bypass'], channel: 'TSAI' },
-  { id: 'sy-naturalwrite', name: 'natural write', handle: '@naturalwrite', platform: 'YouTube', reason: 'Bypass竞品。', tags: ['bypass', '竞品'], channel: 'TSAI' },
+  // TSAI 竞品 (Bypass + AI工具)
+  { id: 'c-answerai-yt', name: 'Answer AI', handle: '@answersai', platform: 'YouTube', url: 'https://www.youtube.com/@answersai', reason: '核心对标：AI persona剧情Shorts，100M+播放。', tags: ['AI persona', 'Shorts'], channel: 'TSAI' },
+  { id: 'c-chalkie', name: 'Chalkie AI', handle: '@chalkieai', platform: 'YouTube', url: 'https://www.youtube.com/@chalkieai', reason: 'GPT Image 2虚拟人设方法论。', tags: ['GPT Image', 'persona'], channel: 'TSAI' },
+  { id: 'c-corbin', name: 'Corbin Brown', handle: '@Corbin_Brown', platform: 'YouTube', url: 'https://www.youtube.com/@Corbin_Brown', reason: 'AI工具评测160K+竞品。', tags: ['AI tools', '竞品'], channel: 'TSAI' },
+  { id: 'c-nateherk', name: 'Nate Herk', handle: '@NateHerk', platform: 'YouTube', url: 'https://www.youtube.com/@NateHerk', reason: 'AI工具评测600K+头部。', tags: ['AI tools'], channel: 'TSAI' },
+  { id: 'c-filternote', name: 'Filternote', handle: '@Filternoteofficial', platform: 'YouTube', url: 'https://www.youtube.com/@Filternoteofficial', reason: 'Bypass竞品参考。', tags: ['bypass', '竞品'], channel: 'TSAI' },
+  { id: 'c-twaingpt', name: 'BypassGPT/TwainGPT', handle: '@TwainGPT', platform: 'YouTube', url: 'https://www.youtube.com/@TwainGPT', reason: 'Bypass reviewer 5K-20K。', tags: ['bypass'], channel: 'TSAI' },
+  { id: 'c-naturalwrite', name: 'natural write', handle: '@naturalwrite', platform: 'YouTube', url: 'https://www.youtube.com/@naturalwrite', reason: 'Bypass竞品。', tags: ['bypass', '竞品'], channel: 'TSAI' },
+  { id: 'c-carterpcs', name: 'carterpcs', handle: '@carterpcs', platform: 'TikTok', url: 'https://www.tiktok.com/@carterpcs', reason: 'AI工具TikTok 100K+。', tags: ['AI tools'], channel: 'TSAI' },
+  { id: 'c-areyouagodd', name: 'areyouagodd', handle: '@areyouagodd', platform: 'TikTok', url: 'https://www.tiktok.com/@areyouagodd', reason: 'Bypass TikTok竞品。', tags: ['bypass'], channel: 'TSAI' },
 
-  // YouTube — Diagrimo 竞品
-  { id: 'sy-napkinai', name: 'Napkin AI', handle: '@napkin_ai', platform: 'YouTube', reason: '直接竞品，月流量300万。', tags: ['competitor', 'diagram'], channel: 'Diagrimo' },
-  { id: 'sy-mirohq', name: 'MiroHQ', handle: '@MiroHQ', platform: 'YouTube', reason: 'diagram/whiteboard头部品牌。', tags: ['diagram'], channel: 'Diagrimo' },
-  { id: 'sy-gamma', name: 'Gamma', handle: '@meetgamma', platform: 'YouTube', reason: 'AI presentation工具。', tags: ['presentation'], channel: 'Diagrimo' },
-  { id: 'sy-mermaid', name: 'MermaidChart', handle: '@MermaidChart', platform: 'YouTube', reason: '代码生成图表工具。', tags: ['diagram'], channel: 'Diagrimo' },
+  // Diagrimo 竞品
+  { id: 'c-napkinai', name: 'Napkin AI', handle: '@napkin_ai', platform: 'YouTube', url: 'https://www.youtube.com/@napkin_ai', reason: '直接竞品，月流量300万。', tags: ['competitor', 'diagram'], channel: 'Diagrimo' },
+  { id: 'c-mirohq', name: 'MiroHQ', handle: '@MiroHQ', platform: 'YouTube', url: 'https://www.youtube.com/@MiroHQ', reason: 'diagram/whiteboard头部品牌。', tags: ['diagram'], channel: 'Diagrimo' },
+  { id: 'c-gamma', name: 'Gamma', handle: '@meetgamma', platform: 'YouTube', url: 'https://www.youtube.com/@meetgamma', reason: 'AI presentation工具。', tags: ['presentation'], channel: 'Diagrimo' },
+  { id: 'c-prezi', name: 'Prezi', handle: '@Prezi', platform: 'YouTube', url: 'https://www.youtube.com/@Prezi', reason: '演示文稿工具。', tags: ['presentation'], channel: 'Diagrimo' },
+  { id: 'c-mermaid', name: 'MermaidChart', handle: '@MermaidChart', platform: 'YouTube', url: 'https://www.youtube.com/@MermaidChart', reason: '代码生成图表工具。', tags: ['diagram'], channel: 'Diagrimo' },
+  { id: 'c-leila', name: 'Leila Gharani', handle: '@LeilaGharani', platform: 'YouTube', url: 'https://www.youtube.com/@LeilaGharani', reason: 'AI PPT赛道800K+。', tags: ['PPT', 'AI tools'], channel: 'Diagrimo' },
 
-  // YouTube — 学习/参考
-  { id: 'sy-kevin', name: 'Kevin Stratvert', handle: '@KevinStratvert', platform: 'YouTube', reason: 'AI工具教程标杆，2M+订阅。', tags: ['tutorial', 'AI tools'] },
-  { id: 'sy-leila', name: 'Leila Gharani', handle: '@LeilaGharani', platform: 'YouTube', reason: 'AI PPT赛道800K+。', tags: ['PPT', 'AI tools'], channel: 'Diagrimo' },
-  { id: 'sy-tinahuang', name: 'Tina Huang', handle: '@TinaHuang1', platform: 'YouTube', reason: 'AI工具200K+。', tags: ['AI tools'] },
-  { id: 'sy-angryprof', name: 'My Angry Professor', handle: '@myangryprofessor', platform: 'YouTube', reason: '冲突升级参考，教授场景情绪节奏。', tags: ['conflict', 'Shorts'], channel: 'Tenora' },
+  // Tenora 竞品
+  { id: 'c-angryprof-yt', name: 'My Angry Professor', handle: '@myangryprofessor', platform: 'YouTube', url: 'https://www.youtube.com/@myangryprofessor', reason: '冲突升级参考，教授场景情绪节奏。', tags: ['conflict', 'Shorts'], channel: 'Tenora' },
+  { id: 'c-answerai-tk', name: 'Answer AI', handle: '@answersai.com', platform: 'TikTok', url: 'https://www.tiktok.com/@answersai.com', reason: 'Tenora核心对标，190K+粉丝。', tags: ['AI persona'], channel: 'Tenora' },
+  { id: 'c-angryprof-tk', name: 'myangryprofessor', handle: '@myangryprofessor', platform: 'TikTok', url: 'https://www.tiktok.com/@myangryprofessor', reason: '44.9K粉丝，6.6M赞。', tags: ['conflict'], channel: 'Tenora' },
+  { id: 'c-chalkie-tk', name: 'chalkie.teachers', handle: '@chalkie.teachers', platform: 'TikTok', url: 'https://www.tiktok.com/@chalkie.teachers', reason: 'IG 21K，教师人设。', tags: ['persona'], channel: 'Tenora' },
+];
+
+// --- 个人对标账号 ---
+export const PERSONAL_BENCHMARKS: BenchmarkAccount[] = [
+  // YouTube
+  { id: 'p-kevin', name: 'Kevin Stratvert', handle: '@KevinStratvert', platform: 'YouTube', url: 'https://www.youtube.com/@KevinStratvert', reason: 'AI工具教程标杆，2M+订阅。小白学AI系列参考。', tags: ['tutorial', 'AI tools'] },
+  { id: 'p-tinahuang', name: 'Tina Huang', handle: '@TinaHuang1', platform: 'YouTube', url: 'https://www.youtube.com/@TinaHuang1', reason: 'AI工具+日常vlog混合内容200K+。', tags: ['AI tools', 'vlog'] },
+  { id: 'p-linus-yt', name: 'Linus Ekenstam', handle: '@LinusEkenstam', platform: 'YouTube', url: 'https://www.youtube.com/@LinusEkenstam', reason: 'AI创作工作流先锋。', tags: ['AI workflow'] },
+  { id: 'p-karpathy-yt', name: 'Andrej Karpathy', handle: '@kaboratory', platform: 'YouTube', url: 'https://www.youtube.com/@kaboratory', reason: 'AI教育大师，深度内容参考。', tags: ['deep tech', 'education'] },
 
   // X / Twitter
-  { id: 'sx-linus', name: 'Linus Ekenstam', handle: '@LinusEkenstam', platform: 'X', reason: 'AI创作工作流先锋。', tags: ['AI workflow'] },
-  { id: 'sx-rowan', name: 'Rowan Cheung', handle: '@rowancheung', platform: 'X', reason: 'The Rundown创始人，每日AI新闻最快。', tags: ['AI news'] },
-  { id: 'sx-karpathy', name: 'Andrej Karpathy', handle: '@karpathy', platform: 'X', reason: 'AI教育大师。', tags: ['deep tech'] },
-  { id: 'sx-allie', name: 'Allie K. Miller', handle: '@alliekmiller', platform: 'X', reason: 'AI商业化观点。', tags: ['AI business'] },
-  { id: 'sx-pete', name: 'Pete Huang', handle: '@petehuang', platform: 'X', reason: 'AI产品动态。', tags: ['AI products'] },
-
-  // TikTok
-  { id: 'st-pogospoofer', name: 'pogo_spoofer', handle: '@pogo_spoofer', platform: 'TikTok', reason: 'PoGoSkill竞品TikTok运营参考。', tags: ['Pokemon GO'], channel: 'PoGoSkill' },
-  { id: 'st-answerai', name: 'Answer AI', handle: '@answersai.com', platform: 'TikTok', reason: 'Tenora核心对标，190K+粉丝。', tags: ['AI persona'], channel: 'Tenora' },
-  { id: 'st-angryprof', name: 'myangryprofessor', handle: '@myangryprofessor', platform: 'TikTok', reason: '44.9K粉丝，6.6M赞。', tags: ['conflict'], channel: 'Tenora' },
-  { id: 'st-carterpcs', name: 'carterpcs', handle: '@carterpcs', platform: 'TikTok', reason: 'AI工具100K+。', tags: ['AI tools'], channel: 'TSAI' },
+  { id: 'p-linus-x', name: 'Linus Ekenstam', handle: '@LinusEkenstam', platform: 'X', url: 'https://x.com/LinusEkenstam', reason: 'AI创作工作流先锋。', tags: ['AI workflow'] },
+  { id: 'p-rowan', name: 'Rowan Cheung', handle: '@rowancheung', platform: 'X', url: 'https://x.com/rowancheung', reason: 'The Rundown创始人，每日AI新闻最快。', tags: ['AI news'] },
+  { id: 'p-karpathy-x', name: 'Andrej Karpathy', handle: '@karpathy', platform: 'X', url: 'https://x.com/karpathy', reason: 'AI教育大师。', tags: ['deep tech'] },
+  { id: 'p-allie', name: 'Allie K. Miller', handle: '@alliekmiller', platform: 'X', url: 'https://x.com/alliekmiller', reason: 'AI商业化观点。', tags: ['AI business'] },
+  { id: 'p-pete', name: 'Pete Huang', handle: '@petehuang', platform: 'X', url: 'https://x.com/petehuang', reason: 'AI产品动态。', tags: ['AI products'] },
+  { id: 'p-zhangzhala-x', name: '张咋啦', handle: '@zarazhangrui', platform: 'X', url: 'https://x.com/zarazhangrui', reason: '跨平台创作者，出海参考。', tags: ['creator'] },
 
   // 小红书
-  { id: 'sxhs-zhangzhala', name: '张咋啦', handle: '@260679956', platform: '小红书', reason: '跨平台创作者参考。', tags: ['creator'] },
-  { id: 'sxhs-shuzishengming', name: '数字生命卡兹克', handle: '@wzglyay2023', platform: '小红书', reason: '6.7万粉，虚实传媒AI创作。', tags: ['AI workflow'] },
-  { id: 'sxhs-xiaohui', name: '晓辉博士', handle: '@783884436', platform: '小红书', reason: '15.4万粉，清华博士/创业。', tags: ['startup'] },
-  { id: 'sxhs-waytoagi', name: '通往AGI之路', handle: '@5500303715', platform: '小红书', reason: 'WaytoAGI社区，2.2万粉。', tags: ['AGI'] },
-  { id: 'sxhs-jiangjie', name: '清华姜学长', handle: '@558572993', platform: '小红书', reason: '17万粉，AIGC影视创业。', tags: ['AIGC'] },
+  { id: 'p-zhangzhala-xhs', name: '张咋啦', handle: '@260679956', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/260679956', reason: '跨平台创作者参考。', tags: ['creator'] },
+  { id: 'p-shuzishengming', name: '数字生命卡兹克', handle: '@wzglyay2023', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/wzglyay2023', reason: '6.7万粉，虚实传媒AI创作。', tags: ['AI workflow'] },
+  { id: 'p-xiaohui', name: '晓辉博士', handle: '@783884436', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/783884436', reason: '15.4万粉，清华博士/创业。', tags: ['startup'] },
+  { id: 'p-waytoagi', name: '通往AGI之路', handle: '@5500303715', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/5500303715', reason: 'WaytoAGI社区，2.2万粉。', tags: ['AGI'] },
+  { id: 'p-jiangjie', name: '清华姜学长', handle: '@558572993', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/558572993', reason: '17万粉，AIGC影视创业。', tags: ['AIGC'] },
 
   // Newsletter
-  { id: 'sn-rundown', name: 'The Rundown AI', handle: 'Newsletter', platform: 'Newsletter', reason: '每日AI快讯+教程，选题灵感来源。', tags: ['daily'] },
-  { id: 'sn-bensbites', name: "Ben's Bites", handle: 'Newsletter', platform: 'Newsletter', reason: 'AI产品发布日报。', tags: ['products'] },
+  { id: 'p-rundown', name: 'The Rundown AI', handle: 'Newsletter', platform: 'Newsletter', url: 'https://www.therundown.ai/', reason: '每日AI快讯+教程，选题灵感来源。', tags: ['daily'] },
+  { id: 'p-bensbites', name: "Ben's Bites", handle: 'Newsletter', platform: 'Newsletter', url: 'https://bensbites.com/', reason: 'AI产品发布日报。', tags: ['products'] },
 ];
+
+// ==================== 选题预告 ====================
 
 export interface UpcomingItem {
   id: string;
@@ -146,24 +161,41 @@ export interface UpcomingItem {
   status: 'researching' | 'scripting' | 'producing' | 'scheduled';
   targetDate: string;
   tags: string[];
+  scope: 'company' | 'personal';
 }
 
 export const UPCOMING: UpcomingItem[] = [
-  { id: 'up1', title: 'GO Fest Global 2026 Location Guide', channel: 'PoGoSkill', status: 'scripting', targetDate: '2026-07', tags: ['event', 'Pokemon GO'] },
-  { id: 'up2', title: 'Mega Mewtwo X/Y Best Counters', channel: 'PoGoSkill', status: 'researching', targetDate: '2026-07', tags: ['raid'] },
-  { id: 'up3', title: 'AI Tool Review Series (Image Models)', channel: 'TSAI', status: 'researching', targetDate: '2026-07', tags: ['AI tools'] },
-  { id: 'up4', title: 'Classroom Drama Shorts Batch', channel: 'Tenora', status: 'producing', targetDate: '2026-06', tags: ['AI persona'] },
-  { id: 'up5', title: 'One-Click Chart Generation Demo', channel: 'Diagrimo', status: 'scripting', targetDate: '2026-07', tags: ['diagram'] },
+  // 公司选题
+  { id: 'up1', title: 'GO Fest Global 2026 Location Guide', channel: 'PoGoSkill', status: 'scripting', targetDate: '2026-07', tags: ['event', 'Pokemon GO'], scope: 'company' },
+  { id: 'up2', title: 'Mega Mewtwo X/Y Best Counters', channel: 'PoGoSkill', status: 'researching', targetDate: '2026-07', tags: ['raid'], scope: 'company' },
+  { id: 'up3', title: 'AI Tool Review Series (Image Models)', channel: 'TSAI', status: 'researching', targetDate: '2026-07', tags: ['AI tools'], scope: 'company' },
+  { id: 'up4', title: 'Classroom Drama Shorts Batch', channel: 'Tenora', status: 'producing', targetDate: '2026-06', tags: ['AI persona'], scope: 'company' },
+  { id: 'up5', title: 'One-Click Chart Generation Demo', channel: 'Diagrimo', status: 'scripting', targetDate: '2026-07', tags: ['diagram'], scope: 'company' },
+
+  // 个人选题
+  { id: 'up-p1', title: '小白学AI系列：从零开始用Claude', channel: '个人频道', status: 'scripting', targetDate: '2026-07', tags: ['AI教程', '小白学AI'], scope: 'personal' },
+  { id: 'up-p2', title: '小白学AI系列：AI做图完全入门', channel: '个人频道', status: 'researching', targetDate: '2026-07', tags: ['AI教程', '小白学AI'], scope: 'personal' },
+  { id: 'up-p3', title: '小白学AI系列：用AI写脚本拍视频', channel: '个人频道', status: 'researching', targetDate: '2026-08', tags: ['AI教程', '小白学AI'], scope: 'personal' },
+  { id: 'up-p4', title: '日常vlog：跳舞健身日记', channel: '个人频道', status: 'producing', targetDate: '2026-07', tags: ['vlog', '健身'], scope: 'personal' },
+  { id: 'up-p5', title: '日常vlog：AI创作者的一天工作日常', channel: '个人频道', status: 'scripting', targetDate: '2026-07', tags: ['vlog', '工作日常'], scope: 'personal' },
 ];
 
-export const STATUS_MAP: Record<string, { label: string; color: string }> = {
-  researching: { label: '调研中', color: 'bg-amber-500/10 text-amber-400 border-amber-500/20' },
-  scripting: { label: '撰写中', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
-  producing: { label: '制作中', color: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
-  scheduled: { label: '已排期', color: 'bg-purple-500/10 text-purple-400 border-purple-500/20' },
+export const STATUS_MAP: Record<string, { label: string; color: string; bg: string }> = {
+  researching: { label: '调研中', color: '#ff9500', bg: 'rgba(255, 149, 0, 0.1)' },
+  scripting: { label: '撰写中', color: '#007aff', bg: 'rgba(0, 122, 255, 0.1)' },
+  producing: { label: '制作中', color: '#34c759', bg: 'rgba(52, 199, 89, 0.1)' },
+  scheduled: { label: '已排期', color: '#af52de', bg: 'rgba(175, 82, 222, 0.1)' },
 };
 
 export const PLATFORM_ICON: Record<string, string> = {
   YouTube: '▶', X: '𝕏', TikTok: '♪', Newsletter: '✉',
-  '小红书': '红', B站: 'B', Instagram: '◎',
+  '小红书': '📕', B站: 'B', Instagram: '◎',
+};
+
+export const CHANNEL_COLORS: Record<string, string> = {
+  PoGoSkill: '#ff3b30',
+  TSAI: '#007aff',
+  Tenora: '#af52de',
+  Diagrimo: '#34c759',
+  '个人频道': '#ff9500',
 };
