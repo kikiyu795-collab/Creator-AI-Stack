@@ -130,7 +130,7 @@ export const PERSONAL_BENCHMARKS: BenchmarkAccount[] = [
   { id: 'p-kevin', name: 'Kevin Stratvert', handle: '@KevinStratvert', platform: 'YouTube', url: 'https://www.youtube.com/@KevinStratvert', reason: 'AI工具教程标杆，2M+订阅。小白学AI系列参考。', tags: ['tutorial', 'AI tools'] },
   { id: 'p-tinahuang', name: 'Tina Huang', handle: '@TinaHuang1', platform: 'YouTube', url: 'https://www.youtube.com/@TinaHuang1', reason: 'AI工具+日常vlog混合内容200K+。', tags: ['AI tools', 'vlog'] },
   { id: 'p-linus-yt', name: 'Linus Ekenstam', handle: '@LinusEkenstam', platform: 'YouTube', url: 'https://www.youtube.com/@LinusEkenstam', reason: 'AI创作工作流先锋。', tags: ['AI workflow'] },
-  { id: 'p-karpathy-yt', name: 'Andrej Karpathy', handle: '@kaboratory', platform: 'YouTube', url: 'https://www.youtube.com/@kaboratory', reason: 'AI教育大师，深度内容参考。', tags: ['deep tech', 'education'] },
+  { id: 'p-karpathy-yt', name: 'Andrej Karpathy', handle: '@AndrejKarpathy', platform: 'YouTube', url: 'https://www.youtube.com/@AndrejKarpathy', reason: 'AI教育大师，深度内容参考。', tags: ['deep tech', 'education'] },
 
   // X / Twitter
   { id: 'p-linus-x', name: 'Linus Ekenstam', handle: '@LinusEkenstam', platform: 'X', url: 'https://x.com/LinusEkenstam', reason: 'AI创作工作流先锋。', tags: ['AI workflow'] },
@@ -141,16 +141,30 @@ export const PERSONAL_BENCHMARKS: BenchmarkAccount[] = [
   { id: 'p-zhangzhala-x', name: '张咋啦', handle: '@zarazhangrui', platform: 'X', url: 'https://x.com/zarazhangrui', reason: '跨平台创作者，出海参考。', tags: ['creator'] },
 
   // 小红书
-  { id: 'p-zhangzhala-xhs', name: '张咋啦', handle: '@260679956', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/260679956', reason: '跨平台创作者参考。', tags: ['creator'] },
-  { id: 'p-shuzishengming', name: '数字生命卡兹克', handle: '@wzglyay2023', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/wzglyay2023', reason: '6.7万粉，虚实传媒AI创作。', tags: ['AI workflow'] },
-  { id: 'p-xiaohui', name: '晓辉博士', handle: '@783884436', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/783884436', reason: '15.4万粉，清华博士/创业。', tags: ['startup'] },
-  { id: 'p-waytoagi', name: '通往AGI之路', handle: '@5500303715', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/5500303715', reason: 'WaytoAGI社区，2.2万粉。', tags: ['AGI'] },
-  { id: 'p-jiangjie', name: '清华姜学长', handle: '@558572993', platform: '小红书', url: 'https://www.xiaohongshu.com/user/profile/558572993', reason: '17万粉，AIGC影视创业。', tags: ['AIGC'] },
+  { id: 'p-zhangzhala-xhs', name: '张咋啦', handle: '@张咋啦', platform: '小红书', url: '', reason: '跨平台创作者，日常+AI内容混合。', tags: ['creator', '出海'] },
+  { id: 'p-kazi', name: '数字生命卡兹克', handle: '@数字生命卡兹克', platform: '小红书', url: '', reason: 'AI工具教程头部创作者。', tags: ['AI tools', '教程'] },
+  { id: 'p-xiaohui', name: '晓辉博士', handle: '@晓辉博士', platform: '小红书', url: '', reason: 'AI科普+工具测评。', tags: ['AI科普'] },
+  { id: 'p-agi', name: '通往AGI之路', handle: '@通往AGI之路', platform: '小红书', url: '', reason: 'AI行业深度分析。', tags: ['AI行业'] },
+  { id: 'p-qinghua', name: '清华姜学长', handle: '@清华姜学长', platform: '小红书', url: '', reason: 'AI学习路径+职业规划。', tags: ['AI教育'] },
 
   // Newsletter
   { id: 'p-rundown', name: 'The Rundown AI', handle: 'Newsletter', platform: 'Newsletter', url: 'https://www.therundown.ai/', reason: '每日AI快讯+教程，选题灵感来源。', tags: ['daily'] },
   { id: 'p-bensbites', name: "Ben's Bites", handle: 'Newsletter', platform: 'Newsletter', url: 'https://bensbites.com/', reason: 'AI产品发布日报。', tags: ['products'] },
 ];
+
+// ==================== 选题库 ====================
+
+export const PERSONAL_ACCOUNT = {
+  url: 'https://www.xiaohongshu.com/user/profile/5d0f85610000000012029fbf',
+  label: 'Kiki 的小红书',
+  platform: '小红书',
+};
+
+export const TOPIC_LIBRARY = {
+  url: 'https://my.feishu.cn/wiki/YF9zw1M0bimt4AkRo4BcKeSJnCf?table=tblDZWKuuLCBkIFH&view=vewAZu4GfI',
+  label: '选题灵感库',
+  desc: '每日自动采集的 AI 热点、创作者工具、行业趋势。数据来自 HuggingFace、GitHub Trending、Product Hunt 等。',
+};
 
 // ==================== 选题预告 ====================
 
@@ -158,26 +172,26 @@ export interface UpcomingItem {
   id: string;
   title: string;
   channel: string;
-  status: 'researching' | 'scripting' | 'producing' | 'scheduled';
+  status: 'researching' | 'scripting' | 'producing' | 'scheduled' | 'published';
   targetDate: string;
   tags: string[];
   scope: 'company' | 'personal';
+  url?: string;
 }
 
 export const UPCOMING: UpcomingItem[] = [
-  // 公司选题
-  { id: 'up1', title: 'GO Fest Global 2026 Location Guide', channel: 'PoGoSkill', status: 'scripting', targetDate: '2026-07', tags: ['event', 'Pokemon GO'], scope: 'company' },
-  { id: 'up2', title: 'Mega Mewtwo X/Y Best Counters', channel: 'PoGoSkill', status: 'researching', targetDate: '2026-07', tags: ['raid'], scope: 'company' },
-  { id: 'up3', title: 'AI Tool Review Series (Image Models)', channel: 'TSAI', status: 'researching', targetDate: '2026-07', tags: ['AI tools'], scope: 'company' },
-  { id: 'up4', title: 'Classroom Drama Shorts Batch', channel: 'Tenora', status: 'producing', targetDate: '2026-06', tags: ['AI persona'], scope: 'company' },
-  { id: 'up5', title: 'One-Click Chart Generation Demo', channel: 'Diagrimo', status: 'scripting', targetDate: '2026-07', tags: ['diagram'], scope: 'company' },
-
   // 个人选题
   { id: 'up-p1', title: '小白学AI系列：从零开始用Claude', channel: '个人频道', status: 'scripting', targetDate: '2026-07', tags: ['AI教程', '小白学AI'], scope: 'personal' },
   { id: 'up-p2', title: '小白学AI系列：AI做图完全入门', channel: '个人频道', status: 'researching', targetDate: '2026-07', tags: ['AI教程', '小白学AI'], scope: 'personal' },
   { id: 'up-p3', title: '小白学AI系列：用AI写脚本拍视频', channel: '个人频道', status: 'researching', targetDate: '2026-08', tags: ['AI教程', '小白学AI'], scope: 'personal' },
   { id: 'up-p4', title: '日常vlog：跳舞健身日记', channel: '个人频道', status: 'producing', targetDate: '2026-07', tags: ['vlog', '健身'], scope: 'personal' },
   { id: 'up-p5', title: '日常vlog：AI创作者的一天工作日常', channel: '个人频道', status: 'scripting', targetDate: '2026-07', tags: ['vlog', '工作日常'], scope: 'personal' },
+
+  // 公司频道已发布爆款 — 每个频道1条
+  { id: 'pub-ps1', title: '10 Hidden Coordinates for GO Fest 2026 Global — Best for Mega Mewtwo Raids', channel: 'PoGoSkill', status: 'published', targetDate: '', tags: ['Pokemon GO', 'event'], scope: 'company', url: 'https://youtube.com/watch?v=nQny7QM7Bdo' },
+  { id: 'pub-ts1', title: 'How to use AI to Beat Turnitin\'s AI detection? (Real Test)', channel: 'TSAI', status: 'published', targetDate: '', tags: ['AI tools', 'Shorts'], scope: 'company', url: 'https://www.youtube.com/shorts/4YosGaIPJZo' },
+  { id: 'pub-tn1', title: 'Why professor loses control', channel: 'Tenora', status: 'published', targetDate: '', tags: ['AI persona', 'Shorts'], scope: 'company', url: 'https://www.youtube.com/shorts/JRp06JwUERU' },
+  { id: 'pub-dg1', title: 'Best FREE AI PPT Maker in 2026 — Tested 6 Tools', channel: 'Diagrimo', status: 'published', targetDate: '', tags: ['diagram', 'AI tools'], scope: 'company', url: 'https://youtube.com/watch?v=skK9U230ziA' },
 ];
 
 export const STATUS_MAP: Record<string, { label: string; color: string; bg: string }> = {
@@ -185,6 +199,7 @@ export const STATUS_MAP: Record<string, { label: string; color: string; bg: stri
   scripting: { label: '撰写中', color: '#007aff', bg: 'rgba(0, 122, 255, 0.1)' },
   producing: { label: '制作中', color: '#34c759', bg: 'rgba(52, 199, 89, 0.1)' },
   scheduled: { label: '已排期', color: '#af52de', bg: 'rgba(175, 82, 222, 0.1)' },
+  published: { label: '已发布', color: '#8e8e93', bg: 'rgba(142, 142, 147, 0.1)' },
 };
 
 export const PLATFORM_ICON: Record<string, string> = {
@@ -198,4 +213,8 @@ export const CHANNEL_COLORS: Record<string, string> = {
   Tenora: '#af52de',
   Diagrimo: '#34c759',
   '个人频道': '#ff9500',
+  'Kevin Stratvert': '#007aff',
+  'Tina Huang': '#ff9500',
+  'Linus Ekenstam': '#af52de',
+  'Andrej Karpathy': '#34c759',
 };

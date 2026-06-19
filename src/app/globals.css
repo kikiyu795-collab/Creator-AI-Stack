@@ -2,21 +2,23 @@
 @import "@xyflow/react/dist/style.css";
 
 :root {
-  --bg-primary: #f2f2f7;
-  --bg-glass: rgba(255, 255, 255, 0.45);
-  --bg-glass-heavy: rgba(255, 255, 255, 0.65);
-  --bg-glass-light: rgba(255, 255, 255, 0.25);
-  --border-glass: rgba(255, 255, 255, 0.6);
-  --border-subtle: rgba(0, 0, 0, 0.06);
-  --text-primary: #1d1d1f;
-  --text-secondary: #6e6e73;
-  --text-muted: #aeaeb2;
-  --accent: #007aff;
-  --accent-light: rgba(0, 122, 255, 0.08);
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-glass: rgba(255, 255, 255, 0.04);
+  --bg-glass-heavy: rgba(255, 255, 255, 0.07);
+  --bg-glass-light: rgba(255, 255, 255, 0.02);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --text-primary: #f5f5f7;
+  --text-secondary: #a1a1a6;
+  --text-muted: #636366;
+  --accent: #6c5ce7;
+  --accent-light: rgba(108, 92, 231, 0.12);
+  --accent-glow: rgba(108, 92, 231, 0.3);
   --green: #34c759;
-  --orange: #ff9500;
-  --purple: #af52de;
-  --pink: #ff2d55;
+  --orange: #ff9f0a;
+  --purple: #bf5af2;
+  --pink: #ff375f;
   --blur: 40px;
 }
 
@@ -40,65 +42,84 @@ body {
   color: white;
 }
 
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.14); }
 
-/* Liquid Glass base */
+/* Glass base — liquid glass on dark */
 .glass {
   background: var(--bg-glass);
-  backdrop-filter: blur(var(--blur)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+  backdrop-filter: blur(var(--blur)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(120%);
   border: 1px solid var(--border-glass);
   box-shadow:
-    0 0.5px 0 0 rgba(255,255,255,0.6) inset,
-    0 1px 3px rgba(0,0,0,0.06),
-    0 8px 24px rgba(0,0,0,0.04);
+    0 0.5px 0 0 rgba(255,255,255,0.04) inset,
+    0 1px 3px rgba(0,0,0,0.3),
+    0 8px 24px rgba(0,0,0,0.2);
 }
 
 .glass-heavy {
   background: var(--bg-glass-heavy);
-  backdrop-filter: blur(60px) saturate(200%);
-  -webkit-backdrop-filter: blur(60px) saturate(200%);
-  border: 1px solid rgba(255,255,255,0.7);
+  backdrop-filter: blur(60px) saturate(130%);
+  -webkit-backdrop-filter: blur(60px) saturate(130%);
+  border: 1px solid rgba(255,255,255,0.1);
   box-shadow:
-    0 0.5px 0 0 rgba(255,255,255,0.8) inset,
-    0 1px 4px rgba(0,0,0,0.06),
-    0 12px 32px rgba(0,0,0,0.05);
+    0 0.5px 0 0 rgba(255,255,255,0.06) inset,
+    0 1px 4px rgba(0,0,0,0.3),
+    0 12px 32px rgba(0,0,0,0.2);
 }
 
 .glass-card {
   background: var(--bg-glass);
-  backdrop-filter: blur(30px) saturate(160%);
-  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  backdrop-filter: blur(30px) saturate(120%);
+  -webkit-backdrop-filter: blur(30px) saturate(120%);
   border: 1px solid var(--border-glass);
   border-radius: 16px;
   box-shadow:
-    0 0.5px 0 0 rgba(255,255,255,0.5) inset,
-    0 1px 2px rgba(0,0,0,0.04),
-    0 4px 16px rgba(0,0,0,0.03);
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    0 0.5px 0 0 rgba(255,255,255,0.03) inset,
+    0 1px 2px rgba(0,0,0,0.2),
+    0 4px 16px rgba(0,0,0,0.15);
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .glass-card:hover {
   background: var(--bg-glass-heavy);
+  border-color: rgba(255,255,255,0.12);
   box-shadow:
-    0 0.5px 0 0 rgba(255,255,255,0.7) inset,
-    0 2px 8px rgba(0,0,0,0.06),
-    0 12px 32px rgba(0,0,0,0.06);
-  transform: translateY(-1px);
+    0 0.5px 0 0 rgba(255,255,255,0.06) inset,
+    0 2px 8px rgba(0,0,0,0.3),
+    0 16px 40px rgba(0,0,0,0.2),
+    0 0 60px rgba(108, 92, 231, 0.06);
+  transform: translateY(-2px);
 }
 
-/* Ambient mesh background */
+/* Manus-style dark mesh background with subtle glow orbs */
 .mesh-bg {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(0, 122, 255, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(175, 82, 222, 0.05) 0%, transparent 50%),
-    radial-gradient(ellipse at 60% 80%, rgba(52, 199, 89, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 30%, rgba(108, 92, 231, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 20%, rgba(191, 90, 242, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(52, 199, 89, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 50%, rgba(108, 92, 231, 0.03) 0%, transparent 40%),
     var(--bg-primary);
 }
 
-/* React Flow overrides for glass style */
+/* Noise texture overlay */
+.mesh-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mesh-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* React Flow overrides for dark glass */
 .react-flow__background { background: transparent !important; }
 .react-flow__controls {
   background: var(--bg-glass-heavy) !important;
@@ -106,27 +127,27 @@ body {
   -webkit-backdrop-filter: blur(30px) !important;
   border: 1px solid var(--border-glass) !important;
   border-radius: 12px !important;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
 }
 .react-flow__controls-button {
   background: transparent !important;
-  border-bottom-color: rgba(0,0,0,0.06) !important;
+  border-bottom-color: rgba(255,255,255,0.06) !important;
   fill: var(--text-secondary) !important;
 }
 .react-flow__controls-button:hover {
-  background: rgba(0,0,0,0.04) !important;
+  background: rgba(255,255,255,0.05) !important;
   fill: var(--text-primary) !important;
 }
-.react-flow__edge-path { stroke: rgba(0,0,0,0.1) !important; stroke-width: 1.5 !important; }
+.react-flow__edge-path { stroke: rgba(255,255,255,0.08) !important; stroke-width: 1.5 !important; }
 
-/* Glow for center node */
+/* Glow pulse */
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 122, 255, 0.15), 0 8px 32px rgba(0,0,0,0.08); }
-  50% { box-shadow: 0 0 40px rgba(0, 122, 255, 0.2), 0 12px 40px rgba(0,0,0,0.1); }
+  0%, 100% { box-shadow: 0 0 20px rgba(108, 92, 231, 0.2), 0 8px 32px rgba(0,0,0,0.3); }
+  50% { box-shadow: 0 0 40px rgba(108, 92, 231, 0.3), 0 12px 40px rgba(0,0,0,0.4); }
 }
 .node-glow { animation: glow-pulse 4s ease-in-out infinite; }
 
-/* Tag pill */
+/* Tag pill — dark variant */
 .tag-pill {
   display: inline-flex;
   align-items: center;
@@ -134,6 +155,21 @@ body {
   font-weight: 500;
   padding: 2px 8px;
   border-radius: 100px;
-  background: rgba(0,0,0,0.04);
+  background: rgba(255,255,255,0.06);
   color: var(--text-secondary);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Sidebar active glow */
+.nav-active {
+  background: var(--bg-glass-heavy);
+  box-shadow: 0 0 20px rgba(108, 92, 231, 0.1);
+}
+
+/* Accent gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #f5f5f7 0%, var(--accent) 50%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

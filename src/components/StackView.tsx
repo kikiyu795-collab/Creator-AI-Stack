@@ -23,7 +23,7 @@ export default function StackView() {
             {/* Header */}
             <button
               onClick={() => toggle(i)}
-              className="w-full flex items-center gap-3 px-5 py-4 text-left hover:bg-black/[0.02] transition-colors"
+              className="w-full flex items-center gap-3 px-5 py-4 text-left hover:bg-white/[0.03] transition-colors"
             >
               <span className="text-xl">{section.icon}</span>
               <div className="flex-1 min-w-0">
@@ -38,7 +38,7 @@ export default function StackView() {
                   {section.picks.slice(0, 4).map((pick, j) => (
                     <div
                       key={pick.id}
-                      className="w-7 h-7 rounded-full bg-white/80 border border-white/60 flex items-center justify-center text-[9px] font-bold text-[var(--text-secondary)] shadow-sm"
+                      className="w-7 h-7 rounded-full bg-white/[0.08] border border-white/[0.1] flex items-center justify-center text-[9px] font-bold text-[var(--text-secondary)] shadow-sm"
                       title={pick.name}
                     >
                       {pick.name.charAt(0)}
@@ -67,13 +67,13 @@ export default function StackView() {
                       href={pick.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-start gap-3 p-3 rounded-xl bg-white/30 hover:bg-white/50 border border-white/40 hover:border-white/70 transition-all hover:shadow-sm"
+                      className="group flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] hover:border-white/[0.1] transition-all hover:shadow-sm"
                     >
                       {/* Rank indicator */}
                       <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-xs font-bold ${
                         j === 0
                           ? 'bg-[var(--accent)] text-white shadow-sm'
-                          : 'bg-black/[0.04] text-[var(--text-muted)]'
+                          : 'bg-white/[0.06] text-[var(--text-muted)]'
                       }`}>
                         {j === 0 ? '★' : j + 1}
                       </div>
@@ -87,7 +87,7 @@ export default function StackView() {
                         <div className="flex items-center gap-2 mb-1">
                           <span className={`text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded-full ${
                             pick.isPaid
-                              ? 'bg-black/[0.04] text-[var(--text-muted)]'
+                              ? 'bg-white/[0.06] text-[var(--text-muted)]'
                               : 'bg-[#34c75915] text-[var(--green)]'
                           }`}>
                             {pick.role}

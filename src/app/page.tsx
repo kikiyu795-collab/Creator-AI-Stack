@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
-  COMPANY_BENCHMARKS, PERSONAL_BENCHMARKS, UPCOMING,
+  COMPANY_BENCHMARKS, PERSONAL_BENCHMARKS, UPCOMING, TOPIC_LIBRARY, PERSONAL_ACCOUNT,
   STATUS_MAP, PLATFORM_ICON, LAST_UPDATED, CHANNEL_COLORS,
   type BenchmarkAccount, type UpcomingItem,
 } from '@/data/stack';
@@ -18,20 +18,20 @@ const NAV = [
 
 const TITLES: Record<string, { title: string; desc: string }> = {
   stack: { title: '我实际在用的', desc: '我当前的AI工作流 — 每周完成制作后更新。不是推荐列表，是正在使用的工具。' },
-  benchmarks: { title: '我在关注谁', desc: '持续追踪的创作者、研究者和竞品。出现在这里的，都在影响我下一条视频。' },
-  upcoming: { title: '接下来做什么', desc: '我正在制作的内容，包含公司频道和个人频道。欢迎关注或提建议。' },
+  benchmarks: { title: '我在关注谁', desc: '持续追踪的创作者、研究者和行业账号。出现在这里的，都在影响我下一条视频。' },
+  upcoming: { title: '接下来做什么', desc: '我正在制作的内容和关注的对标爆款。欢迎关注或提建议。' },
 };
 
 const EMAIL = 'kikiyu795@gmail.com';
 
 function AccountCard({ account }: { account: BenchmarkAccount }) {
   const channelColor = account.channel ? CHANNEL_COLORS[account.channel] : undefined;
+  const Wrapper = account.url ? 'a' : 'div';
+  const linkProps = account.url ? { href: account.url, target: '_blank' as const, rel: 'noopener noreferrer' } : {};
   return (
-    <a
-      href={account.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="glass-card block p-4 cursor-pointer group"
+    <Wrapper
+      {...linkProps}
+      className={`glass-card block p-4 group${account.url ? ' cursor-pointer' : ''}`}
     >
       <div className="flex items-start justify-between mb-2">
         <div className="min-w-0 flex-1">
@@ -41,7 +41,7 @@ function AccountCard({ account }: { account: BenchmarkAccount }) {
           </h4>
           <span className="text-[10px] text-[var(--text-muted)]">{account.handle}</span>
         </div>
-        <span className="text-[9px] font-medium px-2 py-0.5 rounded-full bg-black/[0.04] text-[var(--text-secondary)] shrink-0 ml-2">
+        <span className="text-[9px] font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-[var(--text-secondary)] shrink-0 ml-2">
           {PLATFORM_ICON[account.platform] || ''} {account.platform}
         </span>
       </div>
@@ -59,15 +59,17 @@ function AccountCard({ account }: { account: BenchmarkAccount }) {
           </span>
         )}
       </div>
-    </a>
+    </Wrapper>
   );
 }
 
 function UpcomingCard({ item }: { item: UpcomingItem }) {
   const s = STATUS_MAP[item.status];
   const channelColor = CHANNEL_COLORS[item.channel] || '#888';
+  const Wrapper = item.url ? 'a' : 'div';
+  const linkProps = item.url ? { href: item.url, target: '_blank' as const, rel: 'noopener noreferrer' } : {};
   return (
-    <div className="glass-card p-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+    <Wrapper {...linkProps} className={`glass-card p-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4${item.url ? ' cursor-pointer group' : ''}`}>
       <span
         className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 w-fit shrink-0 rounded-full"
         style={{ background: s.bg, color: s.color }}
@@ -75,7 +77,10 @@ function UpcomingCard({ item }: { item: UpcomingItem }) {
         {s.label}
       </span>
       <div className="flex-1 min-w-0">
-        <h4 className="font-semibold text-sm text-[var(--text-primary)]">{item.title}</h4>
+        <h4 className={`font-semibold text-sm text-[var(--text-primary)]${item.url ? ' group-hover:text-[var(--accent)] transition-colors' : ''}`}>
+          {item.title}
+          {item.url && <span className="ml-1.5 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">↗</span>}
+        </h4>
         <div className="flex items-center gap-2 mt-0.5">
           <span
             className="text-[10px] font-semibold"
@@ -89,7 +94,7 @@ function UpcomingCard({ item }: { item: UpcomingItem }) {
       <div className="flex gap-1.5">
         {item.tags.map(tag => <span key={tag} className="tag-pill">#{tag}</span>)}
       </div>
-    </div>
+    </Wrapper>
   );
 }
 
@@ -125,7 +130,7 @@ export default function Home() {
               className={`text-[13px] tracking-normal transition-all whitespace-nowrap px-3 py-2 rounded-xl text-left flex items-center gap-2 ${
                 view === item.key
                   ? 'glass-heavy text-[var(--text-primary)] font-semibold'
-                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/[0.03]'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-white/[0.04]'
               }`}
             >
               <span className="text-sm">{item.icon}</span>
@@ -142,7 +147,7 @@ export default function Home() {
                 className={`block text-xs mb-0.5 px-2 py-1 rounded-lg transition-colors w-full text-left ${
                   platformFilter === p
                     ? 'text-[var(--accent)] font-semibold bg-[var(--accent-light)]'
-                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-black/[0.03]'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-white/[0.04]'
                 }`}
               >{p === 'All' ? '全部' : `${PLATFORM_ICON[p] || ''} ${p}`}</button>
             ))}
@@ -167,7 +172,7 @@ export default function Home() {
             </span>
             <span className="text-[10px] text-[var(--text-muted)]">最后更新: {LAST_UPDATED}</span>
           </div>
-          <h2 className="text-3xl md:text-[44px] font-bold tracking-tight mb-4 leading-[1.1] text-[var(--text-primary)]">
+          <h2 className="text-3xl md:text-[44px] font-bold tracking-tight mb-4 leading-[1.1] gradient-text">
             {TITLES[view].title}
           </h2>
           <p className="text-sm text-[var(--text-secondary)] font-normal max-w-xl leading-relaxed">
@@ -183,13 +188,13 @@ export default function Home() {
           <div>
             {/* Company / Personal tabs */}
             <div className="glass-heavy inline-flex rounded-xl p-1 mb-6">
-              {([['company', '公司竞品对标'], ['personal', '个人账号对标']] as const).map(([key, label]) => (
+              {([['company', 'AI应用类官方账号'], ['personal', '生活/科技类IP']] as const).map(([key, label]) => (
                 <button
                   key={key}
                   onClick={() => { setBenchmarkTab(key); setPlatformFilter('All'); }}
                   className={`text-[13px] px-4 py-1.5 rounded-lg transition-all font-medium ${
                     benchmarkTab === key
-                      ? 'bg-white text-[var(--text-primary)] shadow-sm'
+                      ? 'bg-white/[0.1] text-[var(--text-primary)] shadow-sm'
                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   }`}
                 >
@@ -244,13 +249,13 @@ export default function Home() {
         {view === 'upcoming' && (
           <div>
             <div className="glass-heavy inline-flex rounded-xl p-1 mb-6">
-              {([['all', '全部'], ['company', '公司频道'], ['personal', '个人频道']] as const).map(([key, label]) => (
+              {([['all', '全部'], ['company', 'AI应用类官方账号'], ['personal', '生活/科技类IP']] as const).map(([key, label]) => (
                 <button
                   key={key}
                   onClick={() => setUpcomingTab(key)}
                   className={`text-[13px] px-4 py-1.5 rounded-lg transition-all font-medium ${
                     upcomingTab === key
-                      ? 'bg-white text-[var(--text-primary)] shadow-sm'
+                      ? 'bg-white/[0.1] text-[var(--text-primary)] shadow-sm'
                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   }`}
                 >
@@ -258,6 +263,46 @@ export default function Home() {
                 </button>
               ))}
             </div>
+            {/* Topic Library Link */}
+            <a
+              href={TOPIC_LIBRARY.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass-card block p-5 mb-6 group cursor-pointer"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-lg">📊</span>
+                <h3 className="font-semibold text-sm text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors">
+                  {TOPIC_LIBRARY.label}
+                  <span className="ml-1.5 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                </h3>
+                <span className="text-[9px] font-medium px-2 py-0.5 rounded-full bg-[var(--accent-light)] text-[var(--accent)] ml-auto">
+                  每日更新
+                </span>
+              </div>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{TOPIC_LIBRARY.desc}</p>
+            </a>
+
+            {(upcomingTab === 'all' || upcomingTab === 'personal') && (
+              <a
+                href={PERSONAL_ACCOUNT.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-card block p-5 mb-6 group cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-lg">📕</span>
+                  <h3 className="font-semibold text-sm text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors">
+                    {PERSONAL_ACCOUNT.label}
+                    <span className="ml-1.5 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                  </h3>
+                  <span className="text-[9px] font-medium px-2 py-0.5 rounded-full bg-[var(--accent-light)] text-[var(--accent)] ml-auto">
+                    {PERSONAL_ACCOUNT.platform}
+                  </span>
+                </div>
+              </a>
+            )}
+
             <div className="space-y-2.5">
               {filteredUpcoming.map(item => <UpcomingCard key={item.id} item={item} />)}
             </div>
